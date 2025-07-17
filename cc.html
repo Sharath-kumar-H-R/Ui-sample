@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F&B Reward Configuration System</title>
+    <!-- Tailwind CSS (optional) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Choice.js CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --secondary: #10b981;
+            --dark: #1f2937;
+            --light: #f3f4f6;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        /* General Styling */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #4338ca;
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #0d9488;
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #dc2626;
+        }
+
+        /* Form Styling */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .select-multiple {
+            height: 120px;
+            overflow-y: auto;
+        }
+
+        /* Table Styling */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .table th,
+        .table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .table th {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .table tr:hover {
+            background-color: #f9fafb;
+        }
+
+        .badge {
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .badge-success {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+
+        .badge-warning {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+
+        /* Member App UI */
+        .reward-card {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 15px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+        }
+
+        .reward-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .reward-description {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .reward-expiry {
+            font-size: 12px;
+            color: #9ca3af;
+        }
+
+        .reward-image {
+            width: 100%;
+            height: 150px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .tab.active {
+            border-bottom-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+
+        /* Hidden class for tab switching */
+        .hidden {
+            display: none;
+        }
+
+        /* Tooltip styling */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            margin-left: 5px;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 14px;
+            font-weight: normal;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Form layout improvements */
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card mb-6">
+            <h1 class="text-3xl font-bold mb-4">Complimentary Reward Configuration System Documentation</h1>
+
+            <h2 class="text-xl font-bold mb-2">System Overview</h2>
+            <p class="mb-4">This system allows admins to configure complimentary rewards for F&B loyalty programs and enables members to view/claim rewards via mobile app.</p>
+
+            <h2 class="text-xl font-bold mb-2">Data Flow</h2>
+            <ol class="list-decimal pl-5 mb-4">
+                <li>Admin configures rewards via Admin Panel</li>
+                <li>Configuration saved to database</li>
+                <li>Member purchases trigger reward eligibility checks</li>
+                <li>Eligible rewards appear in Member App</li>
+                <li>Member redeems rewards which are marked as used</li>
+            </ol>
+
+            <h2 class="text-xl font-bold mb-2">Key Fields Explained</h2>
+            <ul class="list-disc pl-5 mb-4">
+                <li><strong>Buy Categories/Products:</strong> What members need to purchase to earn reward</li>
+                <li><strong>Purchase Requirements:</strong> Quantity and timeline constraints</li>
+                <li><strong>Reward Type:</strong> Voucher (discount) or Product (free item) rewards</li>
+                <li><strong>Voucher Details:</strong> Name, value, validity period etc</li>
+                <li><strong>Product Details:</strong> Items to award for free with quantities</li>
+            </ul>
+
+            <h2 class="text-xl font-bold mb-2">Improvements From Previous Version</h2>
+            <ul class="list-disc pl-5">
+                <li>Added tooltips with contextual help for each field</li>
+                <li>Optimized layout with side-by-side form fields</li>
+                <li>Implemented Choice.js for better multi-select UX</li>
+                <li>Enhanced mobile app preview design</li>
+            </ul>
+        </div>
+
+        <h1 class="text-3xl font-bold mb-6">Complimentary Reward Configuration</h1>
+
+        <!-- Tabs Navigation -->
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab('config')">Configuration</div>
+            <div class="tab" onclick="switchTab('list')">Rewards List</div>
+            <div class="tab" onclick="switchTab('member')">Member App Preview</div>
+        </div>
+
+        <!-- Configuration Page -->
+        <div id="config-section" class="card">
+            <h2 class="text-xl font-bold mb-4">Reward Configuration</h2>
+
+            <form id="reward-form">
+                <!-- Section 1: Applicable Products -->
+                <div class="form-group">
+                    <label class="form-label">
+                        Select Applicable Buy Categories
+                        <span class="tooltip">
+                            <i class="fas fa-info-circle"></i>
+                            <span class="tooltiptext">Select categories that qualify for this reward when purchased</span>
+                        </span>
+                    </label>
+                    <select class="form-control" multiple id="buy-categories">
+                        <option>Coffee</option>
+                        <option>Pastries</option>
+                        <option>Sandwiches</option>
+                        <option>Breakfast</option>
+                        <option>Lunch</option>
+                        <option>Desserts</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        Select Applicable Buy Products
+                        <span class="tooltip">
+                            <i class="fas fa-info-circle"></i>
+                            <span class="tooltiptext">Select specific products that qualify for this reward when purchased</span>
+                        </span>
+                    </label>
+                    <select class="form-control" multiple id="buy-products">
+                        <option>Latte</option>
+                        <option>Cappuccino</option>
+                        <option>Espresso</option>
+                        <option>Croissant</option>
+                        <option>Cheesecake</option>
+                        <option>Club Sandwich</option>
+                    </select>
+                </div>
+
+                <!-- Section 2: Purchase Requirements -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">
+                            Number of Purchases Required
+                            <span class="tooltip">
+                                <i class="fas fa-info-circle"></i>
+                                <span class="tooltiptext">Minimum number of purchases needed to earn this reward</span>
+                            </span>
+                        </label>
+                        <input type="number" class="form-control" min="1" placeholder="e.g. 5">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">
+                            Consecutive Days (optional)
+                            <span class="tooltip">
+                                <i class="fas fa-info-circle"></i>
+                                <span class="tooltiptext">Require purchases to be made on consecutive days</span>
+                            </span>
+                        </label>
+                        <input type="number" class="form-control" min="1" placeholder="e.g. 3">
+                    </div>
+                </div>
+
+                <!-- Section 3: Reward Type -->
+                <div class="form-group">
+                    <label class="form-label">
+                        Reward Type
+                        <span class="tooltip">
+                            <i class="fas fa-info-circle"></i>
+                            <span class="tooltiptext">Choose between discount vouchers or free products as rewards</span>
+                        </span>
+                    </label>
+                    <select id="reward-type" class="form-control">
+                        <option value="voucher">Voucher</option>
+                        <option value="product">Free Product</option>
+                    </select>
+                </div>
+
+                <!-- Voucher Fields -->
+                <div id="voucher-fields">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">
+                                Voucher Name
+                                <span class="tooltip">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span class="tooltiptext">Display name shown to customers</span>
+                                </span>
+                            </label>
+                            <input type="text" class="form-control" placeholder="e.g. ₹50 Coffee Voucher">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">
+                                Voucher Type
+                                <span class="tooltip">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span class="tooltiptext">Fixed amount or percentage discount</span>
+                                </span>
+                            </label>
+                            <select class="form-control">
+                                <option value="fixed">Fixed Amount</option>
+                                <option value="percentage">Percentage</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">
+                                Voucher Value
+                                <span class="tooltip">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span class="tooltiptext">Discount amount or percentage</span>
+                                </span>
+                            </label>
+                            <input type="number" class="form-control" placeholder="e.g. 50">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">
+                                Expiry Days
+                                <span class="tooltip">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span class="tooltiptext">Days until reward expires after being earned</span>
+                                </span>
+                            </label>
+                            <input type="number" class="form-control" placeholder="e.g. 30">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Upload Image</label>
+                        <input type="file" class="form-control">
+                        <small class="text-gray-500">Recommended dimensions: 800x400px</small>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="checkbox" id="single-use">
+                        <label for="single-use">
+                            Single Use Only
+                            <span class="tooltip">
+                                <i class="fas fa-info-circle"></i>
+                                <span class="tooltiptext">Check to ensure voucher can only be redeemed once</span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Product Fields -->
+                <div id="product-fields" class="hidden">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">
+                                Reward Category
+                                <span class="tooltip">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span class="tooltiptext">Select categories for products to award as rewards</span>
+                                </span>
+                            </label>
+                            <select class="form-control" multiple id="reward-categories">
+                                <option>Coffee</option>
+                                <option>Pastries</option>
+                                <option>Sandwiches</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">
+                                Reward Product
+                                <span class="tooltip">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span class="tooltiptext">Select specific products to award as rewards</span>
+                                </span>
+                            </label>
+                            <select class="form-control" multiple id="reward-products">
+                                <option>Latte</option>
+                                <option>Cappuccino</option>
+                                <option>Cheesecake</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">
+                                Quantity
+                                <span class="tooltip">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span class="tooltiptext">Number of free products awarded</span>
+                                </span>
+                            </label>
+                            <input type="number" class="form-control" min="1" placeholder="e.g. 1">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">
+                                Expiry Days
+                                <span class="tooltip">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span class="tooltiptext">Days until reward expires after being earned</span>
+                                </span>
+                            </label>
+                            <input type="number" class="form-control" placeholder="e.g. 30">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary">Save Configuration</button>
+            </form>
+        </div>
+
+        <!-- Rewards List Section -->
+        <div id="list-section" class="card hidden">
+            <h2 class="text-xl font-bold mb-4">Configured Rewards</h2>
+
+            <div class="mb-4 flex justify-between">
+                <div>
+                    <input type="text" placeholder="Search rewards..." class="form-control" style="width: 300px;">
+                </div>
+                <div>
+                    <select class="form-control">
+                        <option>All Reward Types</option>
+                        <option>Voucher</option>
+                        <option>Product</option>
+                    </select>
+                </div>
+            </div>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Reward Name</th>
+                        <th>Buy Rule</th>
+                        <th>Reward Type</th>
+                        <th>Expiry Info</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>₹50 Coffee Voucher</td>
+                        <td>5x Latte</td>
+                        <td>Voucher</td>
+                        <td>Expires on 2023-12-31</td>
+                        <td><span class="badge badge-success">Active</span></td>
+                        <td>
+                            <button class="btn btn-primary" style="padding: 5px 10px; margin-right: 5px;">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-danger" style="padding: 5px 10px;">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Free Cheesecake</td>
+                        <td>3x Coffee</td>
+                        <td>Product</td>
+                        <td>7 days after earning</td>
+                        <td><span class="badge badge-success">Active</span></td>
+                        <td>
+                            <button class="btn btn-primary" style="padding: 5px 10px; margin-right: 5px;">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-danger" style="padding: 5px 10px;">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>₹100 Discount</td>
+                        <td>10x Pastries</td>
+                        <td>Voucher</td>
+                        <td>Expires on 2024-01-15</td>
+                        <td><span class="badge badge-warning">Inactive</span></td>
+                        <td>
+                            <button class="btn btn-primary" style="padding: 5px 10px; margin-right: 5px;">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-danger" style="padding: 5px 10px;">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Member App Preview Section -->
+        <div id="member-section" class="hidden">
+            <div class="card">
+                <h2 class="text-xl font-bold mb-4">Mobile App Preview</h2>
+
+                <!-- Mobile Frame -->
+                <div style="max-width: 375px; margin: 0 auto; border: 10px solid #1f2937; border-radius: 30px; overflow: hidden;">
+                    <!-- App Header -->
+                    <div style="background-color: #4f46e5; padding: 15px; color: white;">
+                        <h3 style="text-align: center; font-weight: 600;">Your Rewards</h3>
+                    </div>
+
+                    <!-- App Content -->
+                    <div style="padding: 15px; background-color: #f3f4f6; height: 600px; overflow-y: auto;">
+                        <!-- Reward Cards -->
+                        <div class="reward-card">
+                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/7477141f-83f6-4e40-b53c-cc70785269b2.png" alt="Coffee voucher image with ₹50 discount text" class="reward-image">
+                            <div class="reward-title">₹50 Coffee Voucher</div>
+                            <div class="reward-description">After 5 latte purchases</div>
+                            <div class="reward-expiry">Valid until Dec 31, 2023</div>
+                            <button class="btn btn-secondary" style="width: 100%;">Redeem Now</button>
+                        </div>
+
+                        <div class="reward-card">
+                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/e9de3c57-01f7-49cf-b30b-c727664a0397.png" alt="Free cheesecake dessert image with strawberries" class="reward-image">
+                            <div class="reward-title">Free Cheesecake</div>
+                            <div class="reward-description">After 3 coffee purchases</div>
+                            <div class="reward-expiry">Valid for 7 days</div>
+                            <button class="btn btn-secondary" style="width: 100%;">Redeem Now</button>
+                        </div>
+
+                        <div class="reward-card">
+                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/7d4a38ee-7f8a-43ec-b522-d5d91348b46c.png" alt="₹100 discount voucher with festive design" class="reward-image">
+                            <div class="reward-title">₹100 Discount</div>
+                            <div class="reward-description">After 10 pastry purchases</div>
+                            <div class="reward-expiry">Valid until Jan 15, 2024</div>
+                            <button class="btn btn-secondary" style="width: 100%;">Redeem Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+    <script>
+        // Initialize Choice.js for all multi-selects
+        document.addEventListener('DOMContentLoaded', function() {
+            const buyCategories = new Choices('#buy-categories', {
+                removeItemButton: true,
+                searchEnabled: true,
+                placeholder: true,
+                placeholderValue: 'Select categories...'
+            });
+
+            const buyProducts = new Choices('#buy-products', {
+                removeItemButton: true,
+                searchEnabled: true,
+                placeholderValue: 'Select products...'
+            });
+
+            const rewardCategories = new Choices('#reward-categories', {
+                removeItemButton: true,
+                searchEnabled: true,
+                placeholderValue: 'Select reward categories...'
+            });
+
+            const rewardProducts = new Choices('#reward-products', {
+                removeItemButton: true,
+                searchEnabled: true,
+                placeholderValue: 'Select reward products...'
+            });
+        });
+        // Tab Switching Functionality
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector(`.tab[onclick="switchTab('${tabId}')"]`).classList.add('active');
+
+            document.getElementById('config-section').classList.add('hidden');
+            document.getElementById('list-section').classList.add('hidden');
+            document.getElementById('member-section').classList.add('hidden');
+            document.getElementById(`${tabId}-section`).classList.remove('hidden');
+        }
+
+        // Reward Type Toggle
+        document.getElementById('reward-type').addEventListener('change', function() {
+            const voucherFields = document.getElementById('voucher-fields');
+            const productFields = document.getElementById('product-fields');
+
+            if (this.value === 'voucher') {
+                voucherFields.classList.remove('hidden');
+                productFields.classList.add('hidden');
+            } else {
+                voucherFields.classList.add('hidden');
+                productFields.classList.remove('hidden');
+            }
+        });
+
+        // Form Submission (Placeholder)
+        document.getElementById('reward-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Reward configuration saved successfully!');
+        });
+    </script>
+</body>
+</html>
