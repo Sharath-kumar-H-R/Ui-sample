@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>BOGO Offer Configuration</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
+  <style>
+    .tooltip-wrapper:hover .tooltip-content {
+      display: block;
+    }
+    .tooltip-content {
+      display: none;
+      position: absolute;
+      background-color: #1f2937;
+      color: white;
+      font-size: 0.75rem;
+      padding: 0.5rem;
+      border-radius: 0.25rem;
+      z-index: 10;
+      top: 1.5rem;
+      left: 0;
+      width: 16rem;
+    }
+    .info-icon {
+      display: inline-block;
+      width: 1.25rem;
+      height: 1.25rem;
+      line-height: 1.25rem;
+      text-align: center;
+      font-size: 0.75rem;
+      font-weight: bold;
+      border: 1px solid #3b82f6;
+      color: #3b82f6;
+      border-radius: 9999px;
+      margin-left: 0.25rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 py-10">
+  <div class="max-w-6xl mx-auto bg-white shadow-xl rounded-xl p-8 space-y-6 text-sm">
+    <h2 class="text-2xl font-bold text-gray-800">Documentation for BOGO Offer Configuration</h2>
+
+    <h3 class="text-lg font-semibold">Purpose</h3>
+    <p>The "Buy 1 Get 1" (BOGO) offer is designed to encourage customer purchases by allowing them to buy one item and receive another item for free. This feature can be configured to apply to specific products and categories, enhancing customer engagement and driving sales.</p>
+
+    <h3 class="text-lg font-semibold">Configuration Fields</h3>
+    <p>The following fields are available for configuring the BOGO offer:</p>
+    <ul class="list-disc list-inside">
+      <li><strong>Offer Name</strong>: The name of the offer (e.g., "Buy 1 Pizza Get 1 Garlic Bread").</li>
+      <li><strong>Offer Code</strong>: An optional code that customers can use to redeem the offer.</li>
+      <li><strong>Start Date</strong>: The date when the offer becomes active.</li>
+      <li><strong>End Date</strong>: The date when the offer expires.</li>
+    </ul>
+
+    <h4 class="font-semibold">Buy Section</h4>
+    <ul class="list-disc list-inside">
+      <li><strong>Buy Categories</strong>: Select one or more categories from which customers must purchase items.</li>
+      <li><strong>Buy Products</strong>: Select specific products that must be purchased. This list is populated based on the selected categories.</li>
+      <li><strong>Buy Quantity</strong>: The minimum quantity of items that must be purchased to trigger the offer.</li>
+    </ul>
+
+    <h4 class="font-semibold">Get Section</h4>
+    <ul class="list-disc list-inside">
+      <li><strong>Get Categories</strong>: Select one or more categories from which free items will be given.</li>
+      <li><strong>Get Products</strong>: Select specific products that can be redeemed for free. This list is populated based on the selected categories.</li>
+      <li><strong>Get Quantity</strong>: The number of free items the customer receives.</li>
+    </ul>
+
+    <h4 class="font-semibold">Additional Settings</h4>
+    <ul class="list-disc list-inside">
+      <li><strong>Applicable Store/Channels</strong>: Select platforms and branches where the offer is applicable.</li>
+      <li><strong>Minimum Order Value</strong>: The minimum total cart amount required to apply the offer.</li>
+      <li><strong>Max Uses Per Customer</strong>: The maximum number of times a customer can avail of the offer.</li>
+      <li><strong>Stackable with Other Offers</strong>: Specify whether this offer can be combined with other active offers.</li>
+    </ul>
+
+    <h4 class="font-semibold">Additional BOGO Settings</h4>
+    <ul class="list-disc list-inside">
+      <li><strong>Auto-Add Free Item in Cart</strong>: Automatically add the free product(s) when conditions are met.</li>
+      <li><strong>First Order Only</strong>: Restrict this offer to the customer's first order only.</li>
+      <li><strong>Auto-Tag Bill with “First Order BOGO”</strong>: This tag will appear in the billing/reporting system for tracking.</li>
+    </ul>
+
+    <h2 class="text-2xl font-bold text-gray-800">Configure BOGO Offer</h2>
+
+    <!-- Offer Details -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div>
+        <label class="block font-medium text-gray-700">Offer Name <span class="text-red-500">*</span></label>
+        <input type="text" class="w-full mt-1 px-4 py-2 border rounded-md shadow-sm" placeholder="e.g., Buy 1 Pizza Get 1 Garlic Bread" required>
+      </div>
+      <div>
+        <label class="block font-medium text-gray-700">Offer Code (Optional)</label>
+        <input type="text" class="w-full mt-1 px-4 py-2 border rounded-md shadow-sm" placeholder="e.g., PIZZADEAL">
+      </div>
+      <div>
+        <label class="block font-medium text-gray-700">Start Date</label>
+        <input type="date" class="w-full mt-1 px-4 py-2 border rounded-md shadow-sm">
+      </div>
+      <div>
+        <label class="block font-medium text-gray-700">End Date</label>
+        <input type="date" class="w-full mt-1 px-4 py-2 border rounded-md shadow-sm">
+      </div>
+    </div>
+
+    <!-- Buy Section -->
+    <div class="bg-blue-50 border border-blue-200 rounded-md p-6 space-y-4">
+      <h3 class="text-lg font-semibold text-blue-800">Buy Section</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label class="block font-medium text-gray-700">Buy Categories
+            <span class="tooltip-wrapper relative"><span class="info-icon">i</span>
+              <span class="tooltip-content">Select one or more categories customers must buy from.</span>
+            </span>
+          </label>
+          <select id="buy_categories" multiple></select>
+        </div>
+
+        <div>
+          <label class="block font-medium text-gray-700">Buy Products
+            <span class="tooltip-wrapper relative"><span class="info-icon">i</span>
+              <span class="tooltip-content">Shown based on selected category. Optional if category selected.</span>
+            </span>
+          </label>
+          <select id="buy_products" multiple></select>
+        </div>
+
+        <div>
+          <label class="block font-medium text-gray-700">Buy Quantity <span class="text-red-500">*</span>
+            <span class="tooltip-wrapper relative"><span class="info-icon">i</span>
+              <span class="tooltip-content">Minimum quantity needed to trigger the offer.</span>
+            </span>
+          </label>
+          <input type="number" min="1" value="1" class="w-full mt-1 px-4 py-2 border rounded-md shadow-sm" required>
+        </div>
+      </div>
+    </div>
+
+    <!-- Get Section -->
+    <div class="bg-green-50 border border-green-200 rounded-md p-6 space-y-4">
+      <h3 class="text-lg font-semibold text-green-800">Get Section</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label class="block font-medium text-gray-700">Get Categories
+            <span class="tooltip-wrapper relative"><span class="info-icon">i</span>
+              <span class="tooltip-content">Categories from which free items will be given.</span>
+            </span>
+          </label>
+          <select id="get_categories" multiple></select>
+        </div>
+
+        <div>
+          <label class="block font-medium text-gray-700">Get Products
+            <span class="tooltip-wrapper relative"><span class="info-icon">i</span>
+              <span class="tooltip-content">Shown based on selected category. Optional if category selected.</span>
+            </span>
+          </label>
+          <select id="get_products" multiple></select>
+        </div>
+
+        <div>
+          <label class="block font-medium text-gray-700">Get Quantity <span class="text-red-500">*</span>
+            <span class="tooltip-wrapper relative"><span class="info-icon">i</span>
+              <span class="tooltip-content">How many free items the customer receives.</span>
+            </span>
+          </label>
+          <input type="number" min="1" value="1" class="w-full mt-1 px-4 py-2 border rounded-md shadow-sm" required>
+        </div>
+      </div>
+    </div>
+
+    <!-- Additional Settings -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div>
+        <label class="block font-medium text-gray-700">Applicable Store/Channels
+          <span class="tooltip-wrapper relative"><span class="info-icon">i</span>
+            <span class="tooltip-content">Select platforms and branches where the offer is applicable.</span>
+          </span>
+        </label>
+        <select id="store_channels" multiple></select>
+      </div>
+
+      <div>
+        <label class="block font-medium text-gray-700">Minimum Order Value (₹)
+          <span class="tooltip-wrapper relative"><span class="info-icon">i</span>
+            <span class="tooltip-content">Minimum total cart amount required to apply the offer.</span>
+          </span>
+        </label>
+        <input type="number" min="0" class="w-full mt-1 px-4 py-2 border rounded-md shadow-sm">
+      </div>
+
+      <div>
+        <label class="block font-medium text-gray-700">Max Uses Per Customer
+          <span class="tooltip-wrapper relative"><span class="info-icon">i</span>
+            <span class="tooltip-content">Maximum times a customer can avail the offer.</span>
+          </span>
+        </label>
+        <input type="number" min="1" class="w-full mt-1 px-4 py-2 border rounded-md shadow-sm">
+      </div>
+
+      <div>
+        <label class="block font-medium text-gray-700">Stackable with Other Offers?
+          <span class="tooltip-wrapper relative"><span class="info-icon">i</span>
+            <span class="tooltip-content">Can this offer be combined with other active offers?</span>
+          </span>
+        </label>
+        <select class="w-full mt-1 px-4 py-2 border rounded-md shadow-sm">
+          <option value="yes">Yes</option>
+          <option value="no" selected>No</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Additional BOGO Settings -->
+    <div class="bg-yellow-50 border border-yellow-200 rounded-md p-6 space-y-4">
+      <h3 class="text-lg font-semibold text-yellow-800">Additional BOGO Settings</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label class="block font-medium text-gray-700">Auto-Add Free Item in Cart
+            <span class="tooltip-wrapper relative"><span class="info-icon">i</span>
+              <span class="tooltip-content">Automatically add the free product(s) when conditions are met.</span>
+            </span>
+          </label>
+          <select class="w-full mt-1 px-4 py-2 border rounded-md shadow-sm">
+            <option value="yes">Yes</option>
+            <option value="no" selected>No</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block font-medium text-gray-700">First Order Only
+            <span class="tooltip-wrapper relative"><span class="info-icon">i</span>
+              <span class="tooltip-content">Restrict this offer to customer's first order only.</span>
+            </span>
+          </label>
+          <input type="text" value="Yes" disabled class="w-full mt-1 px-4 py-2 border rounded-md shadow-sm bg-gray-100 cursor-not-allowed">
+        </div>
+
+        <div>
+          <label class="block font-medium text-gray-700">Auto-Tag Bill with “First Order BOGO”
+            <span class="tooltip-wrapper relative"><span class="info-icon">i</span>
+              <span class="tooltip-content">This tag will appear in billing/reporting system for tracking.</span>
+            </span>
+          </label>
+          <input type="text" value="Yes" disabled class="w-full mt-1 px-4 py-2 border rounded-md shadow-sm bg-gray-100 cursor-not-allowed">
+        </div>
+      </div>
+    </div>
+
+    <!-- Submit -->
+    <div class="text-right mt-6">
+      <button class="bg-indigo-600 text-white px-6 py-3 rounded-md hover:bg-indigo-700">
+        Save BOGO Offer
+      </button>
+    </div>
+  </div>
+
+  <!-- Script -->
+  <script>
+    const dummyCategories = ['Pizza', 'Cold Drinks', 'Burger', 'Desserts'];
+    const dummyProducts = {
+      'Pizza': ['Margherita', 'Pepperoni', 'Farmhouse'],
+      'Cold Drinks': ['Coke', 'Pepsi', 'Sprite'],
+      'Burger': ['Veg Burger', 'Chicken Burger'],
+      'Desserts': ['Brownie', 'Ice Cream']
+    };
+    const storeChannels = ['Web', 'Apps', 'Indiranagar', 'Koramangala', 'HSR Layout', 'BTM', 'Jayanagar'];
+
+    function populateSelect(id, items) {
+      const select = document.getElementById(id);
+      select.innerHTML = '';
+      items.forEach(item => {
+        const opt = document.createElement('option');
+        opt.value = opt.text = item;
+        select.appendChild(opt);
+      });
+      select.choicesInstance = new Choices(select, { removeItemButton: true });
+    }
+
+    function updateProducts(categorySelectId, productSelectId) {
+      const categorySelect = document.getElementById(categorySelectId);
+      const productSelect = document.getElementById(productSelectId);
+
+      // Destroy existing Choices instance
+      if (productSelect.choicesInstance) {
+        productSelect.choicesInstance.destroy();
+      }
+
+      const selectedCategories = Array.from(categorySelect.selectedOptions).map(opt => opt.value);
+      const relatedProducts = [...new Set(selectedCategories.flatMap(cat => dummyProducts[cat] || []))];
+
+      // Clear and repopulate
+      productSelect.innerHTML = '';
+      relatedProducts.forEach(item => {
+        const opt = document.createElement('option');
+        opt.value = opt.text = item;
+        productSelect.appendChild(opt);
+      });
+
+      // Re-initialize Choices
+      productSelect.choicesInstance = new Choices(productSelect, { removeItemButton: true });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      populateSelect('buy_categories', dummyCategories);
+      populateSelect('get_categories', dummyCategories);
+      populateSelect('store_channels', storeChannels);
+
+      // Initial empty product selects
+      const buyProductsSelect = document.getElementById('buy_products');
+      const getProductsSelect = document.getElementById('get_products');
+
+      buyProductsSelect.choicesInstance = new Choices(buyProductsSelect, { removeItemButton: true });
+      getProductsSelect.choicesInstance = new Choices(getProductsSelect, { removeItemButton: true });
+
+      document.getElementById('buy_categories').addEventListener('change', () => {
+        updateProducts('buy_categories', 'buy_products');
+      });
+
+      document.getElementById('get_categories').addEventListener('change', () => {
+        updateProducts('get_categories', 'get_products');
+      });
+    });
+  </script>
+</body>
+</html>
