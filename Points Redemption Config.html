@@ -340,56 +340,66 @@
       true
     );
   </script>
-  <section class="bg-gray-200 min-h-[50vh] py-10 font-sans mt-12 w-full rounded-lg">
-    <h2 class="text-center">This is just an example showing how a user can redeem points for a voucher or product from the member app side</h2>
-  <!-- Loyalty Dashboard -->
-  <div class="max-w-md mx-auto mt-6 p-4 bg-white rounded-xl shadow-md">
-    <h2 class="text-xl font-bold text-center mb-2">My Rewards</h2>
-    <p class="text-center text-gray-700">You have <span class="text-yellow-500 font-bold">1,250 Points</span></p>
-    <div class="mt-4 grid grid-cols-2 gap-4">
-      <button class="bg-blue-600 text-white py-2 rounded-lg" onclick="showVouchers()">Redeem to Voucher</button>
-      <button class="bg-green-600 text-white py-2 rounded-lg" onclick="showProducts()">Redeem to Product</button>
-    </div>
-  </div>
+ <section class="bg-gray-100 py-10 font-sans mt-12 w-full rounded-xl shadow-md">
+  <h2 class="text-center font-bold text-2xl text-gray-800">Example: Mobile View – Redeeming Points</h2>
 
-  <!-- Voucher List -->
-  <div id="voucherSection" class="hidden max-w-md mx-auto mt-6 p-4 bg-white rounded-xl shadow-md">
-    <h3 class="text-lg font-semibold mb-4">Available Vouchers</h3>
-    <div class="space-y-3">
-      <div class="p-3 border rounded-lg flex justify-between items-center">
-        <div>
-          <p class="font-semibold">₹100 Off Voucher</p>
-          <p class="text-sm text-gray-500">500 Points</p>
+  <!-- Simulated Mobile Screen -->
+  <div class="max-w-xs mx-auto mt-8 border-[10px] min-h-[600px] border-black rounded-[2rem] overflow-hidden bg-white shadow-2xl">
+    <!-- Mobile Header -->
+    <div class="bg-gray-900 py-2 text-center text-white text-sm font-semibold tracking-wide">Member App</div>
+
+    <!-- Rewards Overview -->
+    <div class="p-4">
+      <div class="text-center mb-4">
+        <h3 class="text-lg font-semibold">My Rewards</h3>
+        <p class="text-gray-600 text-sm">You have <span class="text-yellow-500 font-bold">1,250 Points</span></p>
+      </div>
+
+      <!-- Tabs -->
+      <div class="flex justify-center gap-4 mb-4">
+        <button class="tab-button bg-blue-600 hover:bg-blue-700 active:scale-95 text-white text-sm py-2 px-4 rounded-full transition-all duration-200" onclick="showVouchers()">Voucher</button>
+        <button class="tab-button bg-green-600 hover:bg-green-700 active:scale-95 text-white text-sm py-2 px-4 rounded-full transition-all duration-200" onclick="showProducts()">Product</button>
+      </div>
+
+      <!-- Voucher List -->
+      <div id="voucherSection" class="hidden space-y-4">
+        <div class="bg-gray-50 rounded-xl shadow overflow-hidden">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbhiTPONhc1OtLY7qqhUtqb-6-UxrdTT2Qrw&s" alt="Voucher" class="w-full h-28 object-cover" />
+          <div class="p-3">
+            <h4 class="font-semibold text-sm mb-1">₹100 Off Voucher</h4>
+            <p class="text-xs text-gray-500 mb-2">500 Points</p>
+            <button class="bg-yellow-500 hover:bg-yellow-600 text-white text-sm w-full py-2 rounded-lg transition-all duration-200" onclick="redeem('voucher')">Redeem</button>
+          </div>
         </div>
-        <button class="bg-yellow-500 text-white px-3 py-1 rounded" onclick="redeem('voucher')">Redeem</button>
       </div>
-    </div>
-  </div>
 
-  <!-- Product List -->
-  <div id="productSection" class="hidden max-w-md mx-auto mt-6 p-4 bg-white rounded-xl shadow-md">
-    <h3 class="text-lg font-semibold mb-4">Available Products</h3>
-    <div class="space-y-3">
-      <div class="p-3 border rounded-lg flex justify-between items-center">
-        <div>
-          <p class="font-semibold">Free Cappuccino</p>
-          <p class="text-sm text-gray-500">200 Points</p>
+      <!-- Product List -->
+      <div id="productSection" class="hidden space-y-4">
+        <div class="bg-gray-50 rounded-xl shadow overflow-hidden">
+          <img src="https://nucleuscoffee.com/cdn/shop/articles/cappuccino.jpg?v=1713632521" alt="Product" class="w-full h-28 object-cover" />
+          <div class="p-3">
+            <h4 class="font-semibold text-sm mb-1">Free Cappuccino</h4>
+            <p class="text-xs text-gray-500 mb-2">200 Points</p>
+            <button class="bg-yellow-500 hover:bg-yellow-600 text-white text-sm w-full py-2 rounded-lg transition-all duration-200" onclick="redeem('product')">Redeem</button>
+          </div>
         </div>
-        <button class="bg-yellow-500 text-white px-3 py-1 rounded" onclick="redeem('product')">Redeem</button>
       </div>
     </div>
   </div>
 
-  <!-- Confirmation Popup -->
-  <div id="popup" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-10">
-    <div class="bg-white p-6 rounded-lg text-center w-4/5 max-w-sm">
-      <p class="text-lg mb-4">Confirm Redemption?</p>
-      <div class="flex px-4 gap-x-4 justify-center">
-        <button onclick="confirmRedemption()" class="bg-green-600 text-white px-4 py-2 rounded">Yes</button>
-        <button onclick="closePopup()" class="bg-gray-300 px-4 py-2 rounded">No</button>
+  <!-- Confirmation Modal -->
+  <div id="popup" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+    <div class="bg-white p-6 rounded-lg text-center w-11/12 max-w-sm shadow-lg">
+      <p class="text-lg font-medium mb-4">Confirm Redemption?</p>
+      <div class="flex justify-center gap-4">
+        <button onclick="confirmRedemption()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md transition">Yes</button>
+        <button onclick="closePopup()" class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded-md transition">No</button>
       </div>
     </div>
   </div>
+
+  <p class="text-red-500 text-center mt-6 text-sm">Note: This is a sample UI only for demonstration.</p>
+</section>
 
   <script>
     function showVouchers() {
@@ -420,6 +430,5 @@
     }
   </script>
 </section>
-    <h1 class="text-red-600 text-center flex">Note: This is just a UI sample for understanding purposes</h1>
 </body>
 </html>
