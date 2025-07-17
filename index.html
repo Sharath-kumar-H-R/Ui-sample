@@ -2,422 +2,144 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Points Redemption Config</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-
-  <!-- Choices.js -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
-  <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>F&B POS System – Enhancement Document</title>
   <style>
-    .tooltip-icon {
-      position: relative;
-      display: inline-block;
-      width: 18px;
-      height: 18px;
-      border: 1px solid #3b82f6;
-      border-radius: 50%;
-      color: #3b82f6;
-      font-size: 12px;
-      text-align: center;
-      line-height: 16px;
-      margin-left: 6px;
-      cursor: help;
-      font-family: sans-serif;
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+      color: #333;
     }
 
-    .tooltip-icon::after {
-      content: attr(data-tooltip);
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity 0.2s;
-      position: absolute;
-      bottom: -30px;
-      left: 0;
-      background: #333;
-      color: #fff;
-      padding: 6px 10px;
-      border-radius: 4px;
-      white-space: nowrap;
-      font-size: 12px;
-      z-index: 10;
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      background-color: #fff;
+      padding: 40px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
     }
 
-    .tooltip-icon:hover::after {
-      visibility: visible;
-      opacity: 1;
+    h1 {
+      font-size: 24px;
+      margin-bottom: 10px;
+      color: #2c3e50;
+    }
+
+    .line {
+      border-top: 2px solid #ccc;
+      margin: 20px 0;
+    }
+
+    .meta {
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      color: #2980b9;
+      font-size: 20px;
+      margin-top: 30px;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    ul li {
+      margin: 8px 0;
+    }
+
+    a {
+      color: #2980b9;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .example {
+      background: #f1f1f1;
+      padding: 12px;
+      border-left: 4px solid #3498db;
+      margin-top: 10px;
     }
   </style>
 </head>
+<body>
+  <div class="container">
+    <h1>F&B POS System – Enhancement Document</h1>
+    <div class="line"></div>
+    <div class="meta">
+      <strong>Project Name:</strong> F&B System Enhancement<br />
+      <strong>Prepared by:</strong> QA Team – artisan Commerce Cloud<br />
+      <strong>Version:</strong> 1.0<br />
+      <strong>Date:</strong> 17/07/2025
+    </div>
+    <div class="line"></div>
 
-<body class="bg-gray-100 p-6">
-  <div class="max-w-5xl mx-auto bg-white p-8 rounded-2xl shadow-lg space-y-6">
-    <h2 class="text-3xl font-bold mb-6 text-center">Points Redemption Configuration</h2>
+    <h2>Feature Enhancements Overview</h2>
 
-    <!-- Documentation Section -->
-    <div class="mb-6">
-      <h3 class="text-xl font-semibold mb-2">Documentation</h3>
-      <p class="mb-4">This form allows you to configure the points redemption system for your food and beverage POS system. Below is a brief explanation of how the data flows and each field's purpose:</p>
+    <h3>1. Membership</h3>
+    <p>
+      This feature enables the definition of membership levels for customers based on their lifetime spending.
+      It also provides configuration options for how loyalty points are earned and redeemed under each membership tier.<br>
+      <a href="membership.html" target="_blank">Click here to view documentation and UI example</a>
+    </p>
 
-      <hr class="my-4" />
+    <div class="line"></div>
 
-      <h4 class="font-semibold">Data Flow Overview</h4>
-      <p class="mb-2"><b class="font-semibold">1. User Accrual of Points: </b>Users earn points based on their purchases.</p>
-      <p class="mb-2"><b class="font-semibold">2. Redemption Configuration:</b> Admins configure how users can redeem their points through this form.</p>
-      <p class="mb-2"><b class="font-semibold">3. Redemption Process:</b> Users can redeem points for vouchers or products based on the configuration.</p>
-      <p class="mb-2"><b class="font-semibold">4. Validation:</b> The system checks if users meet the minimum points requirement and any other conditions set by the admin.</p>
-      <p class="mb-2"><b class="font-semibold">5. Redemption Confirmation:</b> Upon successful redemption, users receive a confirmation and the points are deducted from their account.</p>
-
-      <hr class="my-4" />
-
-      <h4 class="font-semibold">Field Explanations</h4>
-      <ul class="list-disc list-inside mb-4">
-        <li><strong>Redemption Type:</strong> Select whether points can be redeemed for vouchers or products.</li>
-        <li><strong>Membership Levels:</strong> Choose specific membership levels that can redeem points. This is optional.</li>
-        <li><strong>Minimum Points Required:</strong> Specify the minimum number of points a user must have to redeem.</li>
-        <li><strong>Max Redemption Limit:</strong> Set a limit on the maximum points a user can redeem. Leave empty for no limit.</li>
-        <li><strong>Start Date:</strong> Define the start date for the redemption validity period.</li>
-        <li><strong>End Date:</strong> Define the end date for the redemption validity period.</li>
-        <li><strong>Voucher Name:</strong> Enter the name of the voucher that will be displayed to users.</li>
-        <li><strong>Description:</strong> Provide a brief description of the voucher.</li>
-        <li><strong>Voucher Type:</strong> Choose whether the voucher is a fixed amount or a percentage discount.</li>
-        <li><strong>Voucher Amount:</strong> Specify the amount or percentage for the voucher discount.</li>
-        <li><strong>Voucher Expiry (Days):</strong> Set the validity period of the voucher in days.</li>
-        <li><strong>Voucher Code Prefix:</strong> Enter a prefix for auto-generated voucher codes.</li>
-        <li><strong>One-time Use Only:</strong> Check this box if the voucher can only be used once.</li>
-        <li><strong>Upload Image:</strong> Optionally upload an image for the voucher.</li>
-        <li><strong>Categories:</strong> Select product categories applicable for redemption.</li>
-        <li><strong>Products:</strong> Select specific products available for redemption.</li>
-        <li><strong>Points per Product:</strong> Specify how many points are required to redeem each product.</li>
-        <li><strong>Limit Per User:</strong> Set a limit on how many times a user can redeem a product.</li>
-        <li><strong>Stock Dependency:</strong> Check this box if redemption is dependent on product stock availability.</li>
-      </ul>
+    <h3>2. Points Earning Logic</h3>
+    <p>This logic is included within the Membership configuration:</p>
+    <ul>
+      <li><strong>Field Name:</strong> Loyalty Points Per Currency Unit (Rs)</li>
+      <li>Determines how many loyalty points are awarded per RM spent.</li>
+      <li>Also defines how points convert back to currency during redemption.</li>
+    </ul>
+    <div class="example">
+      <strong>Examples:</strong><br />
+      • If 1 point = RM1, set this field to 1<br />
+      • If 10 points = RM1, set this field to 10
     </div>
 
-    <hr class="my-4" />
+    <div class="line"></div>
 
-    <!-- Redemption Form -->
-    <div>
-      <label class="block font-medium">
-        Redemption Type <span class="text-red-500">*</span>
-        <span class="tooltip-icon" data-tooltip="Choose how points will be redeemed.">i</span>
-      </label>
-      <select id="redemptionType" onchange="toggleSections()" class="w-full mt-1 p-3 border rounded-lg shadow-sm" required>
-        <option value="">Select</option>
-        <option value="voucher">Voucher</option>
-        <option value="product">Product</option>
-      </select>
-    </div>
+    <h3>3. Points Redemption</h3>
+    <p>Members can redeem loyalty points via two methods:</p>
+    <ul>
+      <li><strong>a. Redeem for Vouchers:</strong> Convert points to vouchers (e.g., RM5 off on next purchase).</li>
+      <li><strong>b. Redeem for Products:</strong> Exchange points for selected F&B items like drinks, snacks, etc.</li>
+    </ul>
+    <a href="Points Redemption Config.html" target="_blank">Click here to view documentation and UI example</a>
 
-    <!-- Membership Multi-select -->
-    <div>
-      <label class="block font-medium">
-        Membership Levels
-        <span class="tooltip-icon" data-tooltip="Optional. Restrict to selected membership levels.">i</span>
-      </label>
-      <select id="membershipSelect" class="w-full p-3 border rounded-lg shadow-sm" multiple></select>
-    </div>
+    <div class="line"></div>
 
-    <!-- Common Fields -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div>
-        <label class="block font-medium">
-          Minimum Points Required <span class="text-red-500">*</span>
-          <span class="tooltip-icon" data-tooltip="Minimum points needed to redeem.">i</span>
-        </label>
-        <input type="number" min="0" class="w-full p-3 border rounded-lg shadow-sm" placeholder="E.g. 100" required>
-      </div>
+    <h3>4. First-Time User Voucher – Buy 1 Free 1</h3>
+    <p>
+      A Buy 1 Free 1 voucher is automatically applied for first-time users upon completing their first purchase.
+      This is system-driven and does not require manual handling.<br />
+      <a href="buy1.html">Click here to view documentation and UI example</a>
+    </p>
 
-      <div>
-        <label class="block font-medium">
-          Max Redemption Limit
-          <span class="tooltip-icon" data-tooltip="Max points user can redeem. Leave empty for unlimited.">i</span>
-        </label>
-        <input type="number" min="0" class="w-full p-3 border rounded-lg shadow-sm" placeholder="E.g. 500">
-      </div>
+    <div class="line"></div>
 
-      <div>
-        <label class="block font-medium">
-          Start Date
-          <span class="tooltip-icon" data-tooltip="Start of redemption validity.">i</span>
-        </label>
-        <input type="date" class="w-full p-3 border rounded-lg shadow-sm">
-      </div>
-
-      <div>
-        <label class="block font-medium">
-          End Date
-          <span class="tooltip-icon" data-tooltip="End of redemption validity.">i</span>
-        </label>
-        <input type="date" class="w-full p-3 border rounded-lg shadow-sm">
-      </div>
-    </div>
-
-    <!-- Voucher Section -->
-    <div id="voucherFields" class="hidden space-y-4">
-      <hr />
-      <h3 class="text-2xl font-semibold">Voucher Settings</h3>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label class="block font-medium">
-            Voucher Name <span class="text-red-500">*</span>
-            <span class="tooltip-icon" data-tooltip="Title of the voucher shown to users.">i</span>
-          </label>
-          <input type="text" class="w-full p-3 border rounded-lg shadow-sm" placeholder="E.g. Summer Discount" required>
-        </div>
-
-        <div>
-          <label class="block font-medium">
-            Description
-            <span class="tooltip-icon" data-tooltip="Brief description of the voucher.">i</span>
-          </label>
-          <input type="text" class="w-full p-3 border rounded-lg shadow-sm" placeholder="E.g. 10% off on your next purchase">
-        </div>
-
-        <div>
-          <label class="block font-medium">
-            Voucher Type <span class="text-red-500">*</span>
-            <span class="tooltip-icon" data-tooltip="Whether this is a fixed amount or % discount.">i</span>
-          </label>
-          <select class="w-full p-3 border rounded-lg shadow-sm" id="voucherTypeSelect" onchange="toggleVoucherAmount()" required>
-            <option value="">Select Type</option>
-            <option value="fixed">Fixed</option>
-            <option value="percentage">Percentage</option>
-          </select>
-        </div>
-
-        <div id="voucherAmountFixed" class="hidden">
-          <label class="block font-medium">
-            Voucher Amount (₹) <span class="text-red-500">*</span>
-            <span class="tooltip-icon" data-tooltip="Flat amount discount.">i</span>
-          </label>
-          <input type="number" min="0" class="w-full p-3 border rounded-lg shadow-sm" placeholder="E.g. 100">
-        </div>
-
-        <div id="voucherAmountPercentage" class="hidden">
-          <label class="block font-medium">
-            Voucher Discount (%) <span class="text-red-500">*</span>
-            <span class="tooltip-icon" data-tooltip="Percentage discount.">i</span>
-          </label>
-          <input type="number" min="0" max="100" class="w-full p-3 border rounded-lg shadow-sm" placeholder="E.g. 10">
-        </div>
-
-        <div>
-          <label class="block font-medium">
-            Voucher Expiry (Days)
-            <span class="tooltip-icon" data-tooltip="How long the voucher is valid after issue.">i</span>
-          </label>
-          <input type="number" min="0" class="w-full p-3 border rounded-lg shadow-sm" placeholder="E.g. 30">
-        </div>
-
-        <div>
-          <label class="block font-medium">
-            Voucher Code Prefix
-            <span class="tooltip-icon" data-tooltip="Prefix for auto-generated voucher codes.">i</span>
-          </label>
-          <input type="text" class="w-full p-3 border rounded-lg shadow-sm" placeholder="E.g. SUMMER">
-        </div>
-
-        <div class="flex items-center col-span-2">
-          <input type="checkbox" id="oneTimeUse" class="mr-2">
-          <label for="oneTimeUse">One-time Use Only</label>
-        </div>
-
-        <div>
-          <label class="block font-medium">
-            Upload Image
-            <span class="tooltip-icon" data-tooltip="Upload an image for the voucher.">i</span>
-          </label>
-          <input type="file" class="w-full p-3 border rounded-lg shadow-sm" accept="image/*">
-        </div>
-      </div>
-    </div>
-
-    <!-- Product Section -->
-    <div id="productFields" class="hidden space-y-4">
-      <hr />
-      <h3 class="text-2xl font-semibold">Product Redemption Settings</h3>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label class="block font-medium">
-            Categories
-            <span class="tooltip-icon" data-tooltip="Select categories to apply redemption to.">i</span>
-          </label>
-          <select id="categorySelect" multiple class="w-full p-3 border rounded-lg shadow-sm"></select>
-        </div>
-
-        <div>
-          <label class="block font-medium">
-            Products
-            <span class="tooltip-icon" data-tooltip="Products under selected categories. Leave empty = all.">i</span>
-          </label>
-          <select id="productSelect" multiple class="w-full p-3 border rounded-lg shadow-sm"></select>
-        </div>
-
-        <div>
-          <label class="block font-medium">
-            Points per Product <span class="text-red-500">*</span>
-            <span class="tooltip-icon" data-tooltip="How many points are needed per product.">i</span>
-          </label>
-          <input type="number" min="0" class="w-full p-3 border rounded-lg shadow-sm" placeholder="E.g. 50" required>
-        </div>
-
-        <div>
-          <label class="block font-medium">
-            Limit Per User
-            <span class="tooltip-icon" data-tooltip="Maximum redemptions allowed per user.">i</span>
-          </label>
-          <input type="number" min="0" class="w-full p-3 border rounded-lg shadow-sm" placeholder="E.g. 5">
-        </div>
-
-        <div class="flex items-center col-span-2">
-          <input type="checkbox" id="stockDependency" class="mr-2">
-          <label for="stockDependency">Stock Dependency</label>
-        </div>
-      </div>
-    </div>
-
-    <!-- Save -->
-    <div class="pt-4 flex justify-end">
-      <button class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg shadow flex items-center">Save Configuration</button>
-    </div>
+    <h3>5. Complimentary Drink Voucher</h3>
+    <p>
+      A complimentary drink voucher is automatically issued when a customer:
+    </p>
+    <ul>
+      <li>Completes 8 cup purchases, or</li>
+      <li>Meets a configured condition such as:<br />
+        <em>“Spends RM10 minimum for 5 consecutive days” → receives a free snack/product.</em>
+      </li>
+    </ul>
+    <p>Reward rules are customizable via admin settings.</p>
+    <a href="cc.html">Click here to view documentation and UI example</a>
   </div>
-
-  <script>
-    function toggleSections() {
-      const type = document.getElementById('redemptionType').value;
-      document.getElementById('voucherFields').classList.toggle('hidden', type !== 'voucher');
-      document.getElementById('productFields').classList.toggle('hidden', type !== 'product');
-    }
-
-    function toggleVoucherAmount() {
-      const type = document.getElementById('voucherTypeSelect').value;
-      document.getElementById('voucherAmountFixed').classList.toggle('hidden', type !== 'fixed');
-      document.getElementById('voucherAmountPercentage').classList.toggle('hidden', type !== 'percentage');
-    }
-
-    // Init Choices.js
-    const membershipSelect = new Choices('#membershipSelect', { removeItemButton: true });
-    const categorySelect = new Choices('#categorySelect', { removeItemButton: true });
-    const productSelect = new Choices('#productSelect', { removeItemButton: true });
-
-    // Sample membership data
-    const memberships = [
-      { value: 'gold', label: 'Gold Member' },
-      { value: 'silver', label: 'Silver Member' },
-      { value: 'bronze', label: 'Bronze Member' }
-    ];
-
-    memberships.forEach(membership => {
-      membershipSelect.setChoices([membership], 'value', 'label', true);
-    });
-
-    const categoryData = {
-      beverages: ['Coffee', 'Tea', 'Juice'],
-      snacks: ['Fries', 'Samosa'],
-      meals: ['Pizza', 'Thali']
-    };
-
-    document.getElementById('categorySelect').addEventListener('change', function () {
-      const selected = categorySelect.getValue().map(opt => opt.value);
-      let products = new Set();
-      selected.forEach(cat => {
-        (categoryData[cat] || []).forEach(p => products.add(p));
-      });
-      productSelect.clearChoices();
-      productSelect.setChoices([...products].map(p => ({ value: p, label: p })), 'value', 'label', true);
-    });
-
-    categorySelect.setChoices(
-      Object.keys(categoryData).map(c => ({ value: c, label: c })),
-      'value',
-      'label',
-      true
-    );
-  </script>
-  <section class="bg-gray-200 min-h-[50vh] py-10 font-sans mt-12 w-full rounded-lg">
-    <h2 class="text-center">This is just an example showing how a user can redeem points for a voucher or product from the member app side</h2>
-  <!-- Loyalty Dashboard -->
-  <div class="max-w-md mx-auto mt-6 p-4 bg-white rounded-xl shadow-md">
-    <h2 class="text-xl font-bold text-center mb-2">My Rewards</h2>
-    <p class="text-center text-gray-700">You have <span class="text-yellow-500 font-bold">1,250 Points</span></p>
-    <div class="mt-4 grid grid-cols-2 gap-4">
-      <button class="bg-blue-600 text-white py-2 rounded-lg" onclick="showVouchers()">Redeem to Voucher</button>
-      <button class="bg-green-600 text-white py-2 rounded-lg" onclick="showProducts()">Redeem to Product</button>
-    </div>
-  </div>
-
-  <!-- Voucher List -->
-  <div id="voucherSection" class="hidden max-w-md mx-auto mt-6 p-4 bg-white rounded-xl shadow-md">
-    <h3 class="text-lg font-semibold mb-4">Available Vouchers</h3>
-    <div class="space-y-3">
-      <div class="p-3 border rounded-lg flex justify-between items-center">
-        <div>
-          <p class="font-semibold">₹100 Off Voucher</p>
-          <p class="text-sm text-gray-500">500 Points</p>
-        </div>
-        <button class="bg-yellow-500 text-white px-3 py-1 rounded" onclick="redeem('voucher')">Redeem</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Product List -->
-  <div id="productSection" class="hidden max-w-md mx-auto mt-6 p-4 bg-white rounded-xl shadow-md">
-    <h3 class="text-lg font-semibold mb-4">Available Products</h3>
-    <div class="space-y-3">
-      <div class="p-3 border rounded-lg flex justify-between items-center">
-        <div>
-          <p class="font-semibold">Free Cappuccino</p>
-          <p class="text-sm text-gray-500">200 Points</p>
-        </div>
-        <button class="bg-yellow-500 text-white px-3 py-1 rounded" onclick="redeem('product')">Redeem</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Confirmation Popup -->
-  <div id="popup" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-10">
-    <div class="bg-white p-6 rounded-lg text-center w-4/5 max-w-sm">
-      <p class="text-lg mb-4">Confirm Redemption?</p>
-      <div class="flex px-4 gap-x-4 justify-center">
-        <button onclick="confirmRedemption()" class="bg-green-600 text-white px-4 py-2 rounded">Yes</button>
-        <button onclick="closePopup()" class="bg-gray-300 px-4 py-2 rounded">No</button>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    function showVouchers() {
-      document.getElementById('voucherSection').classList.remove('hidden');
-      document.getElementById('productSection').classList.add('hidden');
-    }
-
-    function showProducts() {
-      document.getElementById('productSection').classList.remove('hidden');
-      document.getElementById('voucherSection').classList.add('hidden');
-    }
-
-    function redeem(type) {
-      document.getElementById('popup').dataset.type = type;
-      document.getElementById('popup').classList.remove('hidden');
-      document.getElementById('popup').classList.add('flex');
-    }
-
-    function confirmRedemption() {
-      const type = document.getElementById('popup').dataset.type;
-      alert(`Redemption successful for ${type}!`);
-      closePopup();
-    }
-
-    function closePopup() {
-      document.getElementById('popup').classList.add('hidden');
-      document.getElementById('popup').classList.remove('flex');
-    }
-  </script>
-</section>
-    <h1 class="text-red-600 text-center flex">Note: This is just a UI sample for understanding purposes</h1>
 </body>
 </html>
