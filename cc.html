@@ -335,7 +335,7 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label class="form-label">
-                            Number of Purchases Required
+                            Number of Purchases Required <span style="color: red;">*</span>
                             <span class="tooltip">
                                 <i class="fas fa-info-circle"></i>
                                 <span class="tooltiptext">Minimum number of purchases needed to earn this reward</span>
@@ -344,22 +344,22 @@
                         <input type="number" class="form-control" min="1" placeholder="e.g. 5">
                     </div>
 
-                    <div class="form-group">
-                        <label class="form-label">
-                            Consecutive Days (optional)
-                            <span class="tooltip">
-                                <i class="fas fa-info-circle"></i>
-                                <span class="tooltiptext">Require purchases to be made on consecutive days</span>
-                            </span>
-                        </label>
-                        <input type="number" class="form-control" min="1" placeholder="e.g. 3">
-                    </div>
+                 <div class="form-group">
+                    <label class="form-label">
+                        Consecutive Days <span style="color: red;">*</span>
+                        <span class="tooltip">
+                            <i class="fas fa-info-circle"></i>
+                            <span class="tooltiptext">Require purchases to be made on consecutive days</span>
+                        </span>
+                    </label>
+                    <input type="number" class="form-control" min="1" placeholder="e.g. 3" required>
+                </div>
                 </div>
 
                 <!-- Section 3: Reward Type -->
                 <div class="form-group">
                     <label class="form-label">
-                        Reward Type
+                        Reward Type <span style="color: red;">*</span>
                         <span class="tooltip">
                             <i class="fas fa-info-circle"></i>
                             <span class="tooltiptext">Choose between discount vouchers or free products as rewards</span>
@@ -376,7 +376,7 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label class="form-label">
-                                Voucher Name
+                                Voucher Name <span style="color: red;">*</span>
                                 <span class="tooltip">
                                     <i class="fas fa-info-circle"></i>
                                     <span class="tooltiptext">Display name shown to customers</span>
@@ -387,7 +387,7 @@
 
                         <div class="form-group">
                             <label class="form-label">
-                                Voucher Type
+                                Voucher Type <span style="color: red;">*</span>
                                 <span class="tooltip">
                                     <i class="fas fa-info-circle"></i>
                                     <span class="tooltiptext">Fixed amount or percentage discount</span>
@@ -403,7 +403,7 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label class="form-label">
-                                Voucher Value
+                                Voucher Value <span style="color: red;">*</span>
                                 <span class="tooltip">
                                     <i class="fas fa-info-circle"></i>
                                     <span class="tooltiptext">Discount amount or percentage</span>
@@ -430,7 +430,7 @@
                         <small class="text-gray-500">Recommended dimensions: 800x400px</small>
                     </div>
 
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <input type="checkbox" id="single-use">
                         <label for="single-use">
                             Single Use Only
@@ -439,7 +439,7 @@
                                 <span class="tooltiptext">Check to ensure voucher can only be redeemed once</span>
                             </span>
                         </label>
-                    </div>
+                    </div> -->
                 </div>
 
                 <!-- Product Fields -->
